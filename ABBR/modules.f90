@@ -2635,11 +2635,16 @@ end module module_poisson
 SUBROUTINE para_type_block3a(imin, imax, jmin, jmax, ilen, jlen, klen, ioldtype,inewtype)
   implicit none
   INCLUDE 'mpif.h'
-  integer :: imin, imax, jmin, jmax, ilen, jlen, klen, ioldtype,inewtype,isize, ierr, itemp, idist
-  CALL MPI_TYPE_GET_EXTENT(ioldtype, isize, ierr)
+  integer :: imin, imax, jmin, jmax, ilen, jlen, klen, ioldtype,inewtype,isize, ierr, itemp, idist, dummy
+!  CALL MPI_TYPE_GET_EXTENT(ioldtype, isize, ierr)
+  CALL MPI_TYPE_GET_EXTENT(ioldtype, dummy, isize, ierr)
+!  CALL MPI_TYPE_VECTOR(jlen, ilen, imax - imin + 1, ioldtype, itemp, ierr)
   CALL MPI_TYPE_VECTOR(jlen, ilen, imax - imin + 1, ioldtype, itemp, ierr)
   idist = (imax - imin + 1) * (jmax - jmin + 1) * isize
-  CALL MPI_TYPE_VECTOR(klen, 1, idist, itemp, inewtype, ierr)
+  write (*,*) klen,idist,itemp 
+  CALL MPI_TYPE_CREATE_HVECTOR(klen, 1, idist, itemp, inewtype, ierr)
+!  idist = (imax - imin + 1) * (jmax - jmin + 1) 
+!  CALL MPI_TYPE_VECTOR(klen, 1, idist , itemp, inewtype, ierr)
   CALL MPI_TYPE_COMMIT(inewtype, ierr)
 END
 !=================================================================================================

@@ -1,6 +1,6 @@
 !================================================================================================
 !=================================================================================================
-! Paris-0.1
+! Paris-0.1/home/opc/OBAAA/EIYC_58VV
 ! Extended from Code: FTC3D2011 (Front Tracking Code for 3D simulations)
 ! and Surfer. 
 ! 
@@ -1038,7 +1038,7 @@ contains
       integer :: maxnum_element, total_num_element
       integer :: irank, idrop, ielement, ielem_plot
       integer :: num_element_estimate(0:nPdomain-1)
-      integer :: num_element_rank
+      integer :: num_element_rank, dummy
 
       integer, parameter :: num_gaps = 1000
       real(8) :: gap,dmax,d
@@ -1160,7 +1160,8 @@ contains
       offsets (0) = 0 
       oldtypes(0) = MPI_REAL8 
       blockcounts(0) = 11 
-      call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
+!      call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
+      call MPI_TYPE_GET_EXTENT(MPI_REAL8, dummy, r8extent, ierr) 
       offsets    (1) = blockcounts(0)*r8extent 
       oldtypes   (1) = MPI_INTEGER  
       blockcounts(1) = 1  
@@ -1285,7 +1286,7 @@ contains
       integer :: MPI_drop_merge_comm_type, oldtypes(0:1), blockcounts(0:1), & 
                  offsets(0:1), extent,r8extent 
       integer :: max_num_drop_merge_use 
-      integer :: irank, idrop
+      integer :: irank, idrop, dummy
 
       max_num_drop_merge_use = maxval(num_drop_merge)
       allocate( drops_merge_comm(max_num_drop_merge_use,0:nPdomain-1) )
@@ -1294,7 +1295,8 @@ contains
       offsets (0) = 0 
       oldtypes(0) = MPI_REAL8 
       blockcounts(0) = 11 
-      call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
+!      call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
+      call MPI_TYPE_GET_EXTENT(MPI_REAL8, dummy, r8extent, ierr) 
       offsets    (1) = blockcounts(0)*r8extent 
       oldtypes   (1) = MPI_INTEGER  
       blockcounts(1) = 1+1+maxnum_diff_tag+1+1  
@@ -1352,12 +1354,13 @@ contains
       integer :: irank,idrop
       integer :: req(2),sta(MPI_STATUS_SIZE,2),MPI_Comm,ireq,ierr
       integer :: MPI_drop_merge_comm_type, oldtypes(0:1), blockcounts(0:1), & 
-                 offsets(0:1), extent,r8extent 
+                 offsets(0:1), extent,r8extent, dummy 
 
       !  Setup MPI derived type for drop_merge_comm
       offsets (0) = 0 
       oldtypes(0) = MPI_REAL8 
       blockcounts(0) = 11 
+!      call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
       call MPI_TYPE_GET_EXTENT(MPI_REAL8, r8extent, ierr) 
       offsets    (1) = blockcounts(0)*r8extent 
       oldtypes   (1) = MPI_INTEGER  
@@ -2785,7 +2788,7 @@ contains
       integer :: ierr,irank
       integer :: MPI_part_collect_type,MPI_part_collect_row, & 
                  oldtypes(0:3), blockcounts(0:3), & 
-                 offsets(0:3), intextent,r8extent
+                 offsets(0:3), intextent,r8extent, dummy
 
       integer :: i,j,k,ipart,ip,jp,kp
       real(8) :: xp,yp,zp,fx,fy,fz,x2,y2,z2,s0,s1,dp
@@ -2796,8 +2799,10 @@ contains
       if (TwoWayCouplingFlag == TwoWayCouplingFilterForce) then
          
          !  Setup MPI derived type for particle 
-         call MPI_TYPE_GET_EXTENT(MPI_REAL8,   r8extent,  ierr) 
-         call MPI_TYPE_GET_EXTENT(MPI_INTEGER, intextent, ierr)
+!         call MPI_TYPE_GET_EXTENT(MPI_REAL8,   r8extent,  ierr) 
+!         call MPI_TYPE_GET_EXTENT(MPI_INTEGER, intextent, ierr)
+         call MPI_TYPE_GET_EXTENT(MPI_REAL8, dummy,  r8extent,  ierr) 
+         call MPI_TYPE_GET_EXTENT(MPI_INTEGER, dummy, intextent, ierr)
 
          offsets    (0) = 0 
          oldtypes   (0) = MPI_REAL8 
@@ -3196,7 +3201,7 @@ contains
       integer :: req(4),sta(MPI_STATUS_SIZE,4)
       integer :: MPI_particle_type, oldtypes(0:3), blockcounts(0:3), & 
                  offsets(0:3), intextent,r8extent
-      integer :: maxnum_part_cross, MPI_int_row
+      integer :: maxnum_part_cross, MPI_int_row, dummy
       type(element) :: element_NULL
       integer :: num_part_cross_rank,num_part_rank
    
@@ -3223,8 +3228,10 @@ contains
                             parts_cross_newrank(1:maxnum_part_cross,:),    1, MPI_int_row, & 
                             MPI_Comm_World, ierr)
       !  Setup MPI derived type for particle 
-      call MPI_TYPE_GET_EXTENT(MPI_REAL8,   r8extent,  ierr) 
-      call MPI_TYPE_GET_EXTENT(MPI_INTEGER, intextent, ierr) 
+!      call MPI_TYPE_GET_EXTENT(MPI_REAL8,   r8extent,  ierr) 
+!      call MPI_TYPE_GET_EXTENT(MPI_INTEGER, intextent, ierr) 
+      call MPI_TYPE_GET_EXTENT(MPI_REAL8, dummy,  r8extent,  ierr) 
+      call MPI_TYPE_GET_EXTENT(MPI_INTEGER, dummy, intextent, ierr) 
       offsets    (0) = 0 
       oldtypes   (0) = MPI_REAL8 
       blockcounts(0) = 11 
