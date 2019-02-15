@@ -1165,7 +1165,7 @@ contains
       oldtypes   (1) = MPI_INTEGER  
       blockcounts(1) = 1  
 
-      call MPI_TYPE_STRUCT(2, blockcounts, offsets, oldtypes, & 
+      call MPI_TYPE_CREATE_STRUCT(2, blockcounts, offsets, oldtypes, & 
                            MPI_element_type, ierr) 
       call MPI_TYPE_COMMIT(MPI_element_type, ierr)
 
@@ -1299,7 +1299,7 @@ contains
       oldtypes   (1) = MPI_INTEGER  
       blockcounts(1) = 1+1+maxnum_diff_tag+1+1  
 
-      call MPI_TYPE_STRUCT(2, blockcounts, offsets, oldtypes, & 
+      call MPI_TYPE_CREATE_STRUCT(2, blockcounts, offsets, oldtypes, & 
                                   MPI_drop_merge_comm_type, ierr) 
       call MPI_TYPE_COMMIT(MPI_drop_merge_comm_type, ierr)
 
@@ -1363,7 +1363,7 @@ contains
       oldtypes   (1) = MPI_INTEGER  
       blockcounts(1) = 1+1+maxnum_diff_tag+1  
 
-      call MPI_TYPE_STRUCT(2, blockcounts, offsets, oldtypes, & 
+      call MPI_TYPE_CREATE_STRUCT(2, blockcounts, offsets, oldtypes, & 
                                   MPI_drop_merge_comm_type, ierr) 
       call MPI_TYPE_COMMIT(MPI_drop_merge_comm_type, ierr)
 
@@ -2806,7 +2806,7 @@ contains
          oldtypes   (1) = MPI_INTEGER  
          blockcounts(1) = 4  
          
-         call MPI_TYPE_STRUCT(2, blockcounts, offsets, oldtypes, & 
+         call MPI_TYPE_CREATE_STRUCT(2, blockcounts, offsets, oldtypes, & 
                               MPI_part_collect_type, ierr) 
          call MPI_TYPE_COMMIT(MPI_part_collect_type, ierr)
          call MPI_TYPE_CONTIGUOUS (max_num_part, MPI_part_collect_type, MPI_part_collect_row, ierr)
@@ -3238,7 +3238,7 @@ contains
       oldtypes   (3) = MPI_INTEGER  
       blockcounts(3) = 5  
 
-      call MPI_TYPE_STRUCT(4, blockcounts, offsets, oldtypes, & 
+      call MPI_TYPE_CREATE_STRUCT(4, blockcounts, offsets, oldtypes, & 
                            MPI_particle_type, ierr) 
       call MPI_TYPE_COMMIT(MPI_particle_type, ierr)
 
